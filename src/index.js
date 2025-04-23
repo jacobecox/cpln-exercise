@@ -18,6 +18,6 @@ app.get('/profile/3', (req, res) => {
     res.send('Profile 3');
 });
 
-app.listen(3000, () => {
+app.listen(8080, () => {
     console.log('Server is listening on port 3000');
 });
