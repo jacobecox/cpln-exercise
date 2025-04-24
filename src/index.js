@@ -12,6 +12,11 @@ const pool = new Pool({
   ssl: false
 });
 
+app.get('/', (req, res) => {
+    res.send('API is healthy!');
+  });
+  
+
 const dogsRouter = require('./routes/dogs')(pool);
 
 app.use(express.json());

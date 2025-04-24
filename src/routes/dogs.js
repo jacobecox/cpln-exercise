@@ -4,11 +4,12 @@ module.exports = (pool) => {
   const router = express.Router();
 
   router.get('/', async (req, res) => {
+    console.log('Fetching dog breeds...');
     try {
-      const result = await pool.query('SELECT * FROM dogs');
+      const result = await pool.query('SELECT * FROM dog_breeds');
       res.json(result.rows);
     } catch (err) {
-      console.error('Error fetching dogs:', err);
+      console.error('Error fetching dog breeds:', err);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
