@@ -1,23 +1,40 @@
 const express = require('express');
 const app = express();
+const dogsRouter = require('./routes/dogs');
+require("dotenv").config();
+
 app.use(express.json());
+app.use('/api/dogs', dogsRouter);
 
-app.get('/', (req, res) => {
-    res.send('Add /profile/1 to the end of the url to see the profile');
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  host: process.env.PG_HOST,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
+  port: process.env.PG_PORT || 5432,
+  ssl: false
 });
 
-app.get('/profile/1', (req, res) => {
-    res.send('Profile 1, now try /profile/2');
-});
+app.get("/test", async (req, res) => {
+    console.log('PG_HOST=', process.env.PG_HOST,
+        'PG_USER=', process.env.PG_USER,
+        'PG_PASSWORD=', process.env.PG_PASSWORD,
+        'PG_DATABASE=', process.env.PG_DATABASE,
+        'PG_PORT=', process.env.PG_PORT
+    )
+    try {
+      const result = await pool.query("SELECT NOW()");
+      res.send(result.rows);
+    } catch (err) {
+      console.error("DB connection failed:", err);
+      res.status(500).send("DB connection failed.");
+    }
+  });
+  
 
-app.get('/profile/2', (req, res) => {
-    res.send('Profile 2, now try /profile/3');
-});
-
-app.get('/profile/3', (req, res) => {
-    res.send('Profile 3');
-});
-
-app.listen(8080, () => {
-    console.log('Server is listening on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
