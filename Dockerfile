@@ -1,23 +1,23 @@
-# Use the official Node.js image as a base
-FROM node:22.15.0-alpine
+# Use official Node.js Alpine base image
+FROM node:22.1.0-alpine
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy dependency definitions
 COPY package*.json ./
 
-# Install dependencies
+# Install all dependencies
 RUN npm install
 
-# Optional: Run npm audit fix separately (without force) to avoid breaking changes
-# RUN npm audit fix
-
-# Copy the rest of the application code
+# Copy all other source code
 COPY . .
 
-# Expose the port the app runs on
+# Expose app port
 EXPOSE 3000
 
-# Command to run the application
+# Log start
+RUN echo "Starting the Node.js app..."
+
+# Start the app
 CMD ["npm", "start"]

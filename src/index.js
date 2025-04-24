@@ -1,11 +1,6 @@
 const express = require('express');
 const app = express();
-const dogsRouter = require('./routes/dogs');
 require("dotenv").config();
-
-app.use(express.json());
-app.use('/api/dogs', dogsRouter);
-
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -17,24 +12,12 @@ const pool = new Pool({
   ssl: false
 });
 
-app.get("/test", async (req, res) => {
-    console.log('PG_HOST=', process.env.PG_HOST,
-        'PG_USER=', process.env.PG_USER,
-        'PG_PASSWORD=', process.env.PG_PASSWORD,
-        'PG_DATABASE=', process.env.PG_DATABASE,
-        'PG_PORT=', process.env.PG_PORT
-    )
-    try {
-      const result = await pool.query("SELECT NOW()");
-      res.send(result.rows);
-    } catch (err) {
-      console.error("DB connection failed:", err);
-      res.status(500).send("DB connection failed.");
-    }
-  });
-  
+const dogsRouter = require('./routes/dogs')(pool);
+
+app.use(express.json());
+app.use('/api/dogs', dogsRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });
