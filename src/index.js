@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 const dogsRouter = require('./routes/dogs')(pool);
 
 app.use(express.json());
-app.use('/api/dogs', dogsRouter);
+app.use('/dogs', dogsRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

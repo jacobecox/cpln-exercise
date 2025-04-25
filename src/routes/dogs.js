@@ -6,7 +6,10 @@ module.exports = (pool) => {
   router.get('/', async (req, res) => {
     console.log('Fetching dog breeds...');
     try {
+      console.log('Running SQL query...');
       const result = await pool.query('SELECT * FROM dog_breeds');
+      console.log('Query results:', result.rows);
+
       res.json(result.rows);
     } catch (err) {
       console.error('Error fetching dog breeds:', err);
