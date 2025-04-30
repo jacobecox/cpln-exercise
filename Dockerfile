@@ -1,6 +1,12 @@
 # Use official Node.js Alpine base image
 FROM node:22.1.0-alpine
 
+# Update package index
+RUN apk update
+
+# Install busybox-extras (often includes telnet)
+RUN apk add --no-cache busybox-extras
+
 # Set working directory
 WORKDIR /app
 
@@ -17,7 +23,7 @@ COPY . .
 EXPOSE 3000
 
 # Log start
-RUN echo "Starting the Node.js app..."
+RUN echo "Starting the Node.js app with telnet..."
 
 # Start the app
 CMD ["npm", "start"]

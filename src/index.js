@@ -17,10 +17,10 @@ app.get('/', (req, res) => {
   });
   
 
-const dogsRouter = require('./routes/dogs')(pool);
+const catsRouter = require('./routes/cats')(pool);
 
 app.use(express.json());
-app.use('/dogs', dogsRouter);
+app.use('/cats', catsRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
