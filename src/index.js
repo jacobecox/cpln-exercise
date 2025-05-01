@@ -20,11 +20,13 @@ app.get('/', (req, res) => {
 const catsRouter = require('./routes/cats')(pool);
 const dogsRouter = require('./routes/dogs')(pool);
 const birdsRouter = require('./routes/birds')(pool);
+const photoRouter = require('./routes/photo');
 
 app.use(express.json());
 app.use('/cats', catsRouter);
 app.use('/dogs', dogsRouter);
 app.use('/birds', birdsRouter);
+app.use('/photo', photoRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
