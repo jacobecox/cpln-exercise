@@ -5,7 +5,7 @@ const s3 = new AWS.S3();
 module.exports = () => {
   const router = express.Router();
 
-  router.get('/bird/:key', async (req, res) => {
+  router.get('/:key', async (req, res) => {
     console.log('bird photo route called')
     const { key } = req.params;
    

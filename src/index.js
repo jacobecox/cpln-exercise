@@ -26,7 +26,7 @@ app.use(express.json());
 app.use('/cats', catsRouter);
 app.use('/dogs', dogsRouter);
 app.use('/birds', birdsRouter);
-app.use('/photo', photoRouter);
+app.use('/bird', photoRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
